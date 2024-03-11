@@ -17,7 +17,7 @@ const Cart = () => {
 			setCart(responseJson);
 			//console.log(responseJson);
 		} catch (err) {
-			console.log("error fetching products list", error);
+			console.log("error fetching products list", err);
 			return err;
 		}
 	};
@@ -53,11 +53,11 @@ const Cart = () => {
 		return <h1>Loading ...</h1>;
 	}
 
-	const totalPrice = cart.products.reduce((acc, item) => {
+	const totalPrice = cart.products.reduce((acc, cartProduct) => {
 		const { price } = cartItems.find(
-			(product) => item.id === product.productId,
+			(product) => product.id === cartProduct.productId,
 		);
-		return acc + item.quantity * price;
+		return acc + cartProduct.quantity * price;
 	}, 0);
 
 	console.log(cart);
@@ -76,29 +76,29 @@ const Cart = () => {
 				</p>
 			)}
 			<hr className="my-6" />
-			{cart.products.map((product) => {
+			{cart.products.map(({ productId, quantity }) => {
 				const { title, category, price, image, description } = cartItems.find(
-					(item) => item.id === product.productId,
+					(item) => item.id === productId,
 				);
 				// console.log("product", product);
 				// console.log("prod", productDetails);
 				return (
 					<article
 						className="grid items-center grid-cols-6 gap-4 m-4 card"
-						key={product.productId}
+						key={productId}
 					>
 						<img alt={title} src={image} className="" />
 						<strong className="">{title}</strong>
 						<p className=""> {category}</p>
 						<p className="">
-							{product.quantity} @ ${price}
+							{quantity} @ ${price}
 						</p>
 						<p className="overflow-clip">{`${description.substring(
 							0,
 							50,
 						)}...`}</p>
 						<Link
-							to={`/product/details/${product.productId}`}
+							to={`/product/details/${productId}`}
 							type="button"
 							className="p-2 text-white bg-blue-500 rounded-md"
 						>

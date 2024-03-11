@@ -33,17 +33,19 @@ function ProductDetailsPage() {
 		return <h1>Loading ...</h1>;
 	}
 
+	const { title, image, category, description, price } = product;
+
 	return (
 		<div className="flex flex-col items-start gap-4 p-16 ProductDetailsPage">
 			{/* Render product details here */}
-			<img className="w-96" src={product.image} alt={product.title} />
+			<img className="w-96" src={image} alt={title} />
 			<span className="px-2 py-1 text-white bg-blue-500 rounded-sm ">
-				{product.category}
+				{category}
 			</span>
-			<h2 className="text-lg font-bold">{product.title}</h2>
+			<h2 className="text-lg font-bold">{title}</h2>
 			<section className="grid justify-start grid-cols-3">
-				<p className="col-span-2 p-0 m-0 text-left">{product.description}</p>
-				<p>{product.price}</p>
+				<p className="col-span-2 p-0 m-0 text-left">{description}</p>
+				<p>{price}</p>
 			</section>
 			<Link to="/" className="self-center">
 				<button
